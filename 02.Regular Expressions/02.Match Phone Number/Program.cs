@@ -1,18 +1,23 @@
 ﻿using System.Text.RegularExpressions;
 
 string text = Console.ReadLine();
-//текст, в който ще търся валидните цели имена
+//текст, в който трябва да намерим всички валидни номера
 
-Regex regexFullName = new Regex(@"\b[A-Z][a-z]+ [A-Z][a-z]+\b");
-//шаблон, на който искам да ми отговаря текста
+Regex regexPhoneNumber = new Regex(@"[+]359([ -])2\1[0-9]{3}\1[0-9]{4}");
+//шаблон, на който трябва да отговаря тел. номер
 
 
-//прилагаме шаблона към текста
-//-> получаваме съвкупност / колекция от всички текстове, които отговарят (мачват) на шаблона
-MatchCollection allFullNames = regexFullName.Matches(text);
+MatchCollection allValidPhoneNumbers = regexPhoneNumber.Matches(text);
 
-//oбхождаме всички валидни пълни имена
-foreach (Match fullName in allFullNames)
+for (int position = 0; position <= allValidPhoneNumbers.Count - 1; position++)
 {
-    Console.Write(fullName.Value + " ");
+    if (position == allValidPhoneNumbers.Count - 1)
+    {
+        //последния телефонен номер
+        Console.Write(allValidPhoneNumbers[position].Value);
+    }
+    else
+    {
+        Console.Write(allValidPhoneNumbers[position].Value + ", ");
+    }
 }
